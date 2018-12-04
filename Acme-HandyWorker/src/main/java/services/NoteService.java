@@ -1,11 +1,14 @@
 package services;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
+import domain.Customer;
 import domain.Note;
 import repositories.NoteRepository;
 
@@ -35,6 +38,14 @@ public class NoteService {
 
 	public void delete(Note entity) {
 		noteRepository.delete(entity);
+	}
+	
+	public Collection<Note> findNotesByCustomer(Customer customer){
+		Assert.notNull(customer);
+		Assert.isTrue(customer.getId()!=0);
+		Collection<Note> res = noteRepository.findNotesByCustomerId(customer.getId());
+		Assert.notEmpty(res);
+		return res;
 	}
 	
 	

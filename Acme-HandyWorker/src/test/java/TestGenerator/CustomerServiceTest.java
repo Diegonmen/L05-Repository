@@ -249,7 +249,9 @@ public class CustomerServiceTest extends AbstractTest {
 		Customer customer = customerService.findCustomerByUserAccount(LoginService.getPrincipal());
 		Collection<Report> rep = reportService.findReportsByCustomer(customer);
 		Report report = rep.iterator().next();
-		Note saved = customerService.saveNote(note, report);
+		String comment = "Test Comment";
+		Note saved = customerService.saveNote(note, report, comment);
 		Assert.notNull(saved);
+		Assert.isTrue(saved.getComments().contains(comment));
 	}
 }

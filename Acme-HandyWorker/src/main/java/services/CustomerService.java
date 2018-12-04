@@ -351,7 +351,7 @@ public class CustomerService {
 		return res;
 	}
 	
-	public Note saveNote(Note note, Report report) {
+	public Note saveNote(Note note, Report report, String comments) {
 		Assert.notNull(note);
 		Assert.notNull(report);
 		Assert.isTrue(note.getId()!=0);
@@ -361,8 +361,14 @@ public class CustomerService {
 		Authority authority = new Authority();
 		authority.setAuthority("CUSTOMER");
 		Assert.isTrue(logedUserAccount.getAuthorities().contains(authority) && reportService.findReportsByCustomer(findCustomerByUserAccount(logedUserAccount)).contains(report));
-		res = noteService.save(note);
-		return res;
+		if(noteService.exists(note.getId())) {
+			note.getComments().add(logedUserAccount.getUsername() + ": -" + comments);
+			res = noteService.save(note);
+			return res;
+		}else {
+			res = noteService.save(note);
+			return res;
+		}
 	}
 	
 	public String generateAlphanumeric() {
