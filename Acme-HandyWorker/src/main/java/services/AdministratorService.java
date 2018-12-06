@@ -207,7 +207,7 @@ public class AdministratorService {
 	
 	public UserAccount changeEnabledActor(UserAccount userAccount) {
 		Assert.notNull(userAccount);
-		
+		Assert.isTrue(actorservice.isSuspicious(actorservice.findByUserAccount(userAccount)));
 		userAccount.setEnabled(!userAccount.isEnabled());
 		return this.loginservice.save(userAccount);
 	}

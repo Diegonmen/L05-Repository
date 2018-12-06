@@ -243,15 +243,49 @@ public class CustomerServiceTest extends AbstractTest {
 	}
 	
 	@Test
-	public void saveNoteTest() {
+	public void saveNoteTest1() {
 		Note note = noteService.findAll().iterator().next();
+		Note newNote = new Note();
+		newNote.setComments(note.getComments());
+		newNote.setActor(note.getActor());
+		newNote.setCreatorComment("Prueba");
+		newNote.setMoment(note.getMoment());
+		newNote.setId(note.getId());
+		newNote.setVersion(note.getVersion());
 		this.authenticate("customer2");
 		Customer customer = customerService.findCustomerByUserAccount(LoginService.getPrincipal());
 		Collection<Report> rep = reportService.findReportsByCustomer(customer);
 		Report report = rep.iterator().next();
-		String comment = "Test Comment";
-		Note saved = customerService.saveNote(note, report, comment);
+		Report saved = customerService.saveNote(newNote, report, null);
 		Assert.notNull(saved);
-		Assert.isTrue(saved.getComments().contains(comment));
+		Assert.isTrue(saved.getNotes().contains(newNote));
 	}
+	
+	@Test
+	public void saveNoteTest2() {
+		this.authenticate("customer2");
+		Customer customer = customerService.findCustomerByUserAccount(LoginService.getPrincipal());
+		Collection<Report> rep = reportService.findReportsByCustomer(customer);
+		Report report = rep.iterator().next();
+		Note note = report.getNotes().iterator().next();
+		String comment = "Pureba";
+		Report saved = customerService.saveNote(note, report, comment);
+		Assert.notNull(saved);
+		Assert.isTrue(saved.getNotes().contains(note));
+		Assert.isTrue(note.getComments().contains(LoginService.getPrincipal().getUsername() + ": -" + comment));
+	}
+	
+	
+//	@Test
+//	public void saveNoteTest1() {
+//		Note note = noteService.findAll().iterator().next();
+//		this.authenticate("customer2");
+//		Customer customer = customerService.findCustomerByUserAccount(LoginService.getPrincipal());
+//		Collection<Report> rep = reportService.findReportsByCustomer(customer);
+//		Report report = rep.iterator().next();
+//		String comment = "Test Comment";
+//		Note saved = customerService.saveNote(note, report, comment);
+//		Assert.notNull(saved);
+//		Assert.isTrue(saved.getComments().contains(LoginService.getPrincipal().getUsername() + ": -" + comment));
+//	}
 }

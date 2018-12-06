@@ -36,4 +36,5 @@ public class ConfigurationService {
 		configurationRepository.delete(entity);
 	}
 
+
 }
