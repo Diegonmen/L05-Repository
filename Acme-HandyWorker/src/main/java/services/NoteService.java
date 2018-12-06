@@ -48,5 +48,10 @@ public class NoteService {
 		return res;
 	}
 	
+	public Double[] computeAvgMinmaxStdvNotesPerReport() {
+		Double[] res = noteRepository.computeAvgMinmaxStdvNotesPerReport();
+		Assert.notNull(res);
+		return res;
+	}
 	
 }

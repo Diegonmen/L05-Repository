@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import domain.Customer;
+import domain.HandyWorker;
 import domain.Referee;
 import domain.Report;
 import repositories.ReportRepository;
@@ -63,9 +64,15 @@ public class ReportService {
 		Assert.isTrue(referee.getId() != 0);
 		Collection<Report> res = reportrepository.findReportsInFinalModeByRefereeId(referee.getId());
 		Assert.notNull(res);
-		return res;
-		
+		return res;	
 	}
 	
+	public Collection<Report> findReportsByHandyWorker(HandyWorker handyWorker){
+		Assert.notNull(handyWorker);
+		Assert.isTrue(handyWorker.getId()!=0);
+		Collection<Report> res = reportrepository.findReportsByHandyWorkerId(handyWorker.getId());
+		Assert.notEmpty(res);
+		return res;
+	}
 	
 }

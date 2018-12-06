@@ -372,6 +372,18 @@ public class CustomerService {
 		return res;
 
 	}
+	
+	public Collection<Customer> topThreeCustomersInTermsOfComplaints(){
+		Collection<Customer> aux = customerRepository.topThreeCustomersInTermsOfComplaints();
+		Assert.notNull(aux);
+		Collection<Customer> res = new LinkedList<>();
+		for(int i = 0; i<3; i++) {
+			Customer customer = aux.iterator().next();
+			aux.remove(customer);
+			res.add(customer);
+		}
+		return res;
+	}
 
 	public String generateAlphanumeric() {
 		final Character[] letras = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',

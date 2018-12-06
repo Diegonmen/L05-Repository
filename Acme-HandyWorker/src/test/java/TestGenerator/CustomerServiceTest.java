@@ -275,6 +275,12 @@ public class CustomerServiceTest extends AbstractTest {
 		Assert.isTrue(note.getComments().contains(LoginService.getPrincipal().getUsername() + ": -" + comment));
 	}
 	
+	@Test
+	public void topThreeCustomersInTermsOfComplaintsTest() {
+		Collection<Customer> customers = customerService.topThreeCustomersInTermsOfComplaints();
+		Assert.isTrue(customers.size()==3);
+	}
+	
 	
 //	@Test
 //	public void saveNoteTest1() {

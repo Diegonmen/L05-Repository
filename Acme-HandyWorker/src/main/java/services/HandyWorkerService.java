@@ -338,4 +338,16 @@ public class HandyWorkerService {
 		Collection<HandyWorker> res = this.handyWorkerRepository.handyWorkersWith10PercentMoreAvgApplicatios();
 		return res;
 	}
+	
+	public Collection<HandyWorker> topThreeHandyWorkersInTermsOfComplaints() {
+		Collection<HandyWorker> aux = handyWorkerRepository.topThreeHandyWorkersInTermsOfComplaints();
+		Assert.notNull(aux);
+		Collection<HandyWorker> res = new LinkedList<HandyWorker>();
+		for(int i = 0; i<3; i++) {
+			HandyWorker handyWorker = aux.iterator().next();
+			aux.remove(handyWorker);
+			res.add(handyWorker);
+		}
+		return res;
+	}
 }
