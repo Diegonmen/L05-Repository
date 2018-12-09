@@ -129,6 +129,42 @@
 				<value>ha sido seleccionado</value>
 			</list>
 		</property>
+		<property name="goodWords">
+			<list>
+				<value>good</value>
+				<value>fantastic</value>
+				<value>excellent</value>
+				<value>great</value>
+				<value>amazing</value>
+				<value>terrific</value>
+				<value>beautiful</value>
+				<value>bueno</value>
+				<value>buena</value>
+				<value>fantastico</value>
+				<value>fantastica</value>
+				<value>excelente</value>
+				<value>genial</value>
+				<value>increible</value>
+				<value>estupendo</value>
+				<value>estupenda</value>
+				<value>hermoso</value>
+				<value>hermosa</value>
+			</list>
+		</property>
+		<property name="badWords">
+			<list>
+				<value>not</value>
+				<value>bad</value>
+				<value>horrible</value>
+				<value>average</value>
+				<value>disaster</value>
+				<value>no</value>
+				<value>malo</value>
+				<value>mala</value>
+				<value>media</value>
+				<value>desastre</value>
+			</list>
+		</property>
 		<property name="VATTax" value="21.0" />
 		<property name="countryCode" value="+34" />
 		<property name="finderCached" value="20" />
@@ -2223,6 +2259,8 @@
 				</value>
 			</list>
 		</property>
+		<property name="number" value="0">
+		</property>
 	</bean>
 
 	<bean id="section1" class="domain.Section">
@@ -2233,6 +2271,8 @@
 				<value>https://www.vgr.com/wp-content/uploads/2018/11/Red-Dead-Redemption-2-Download-Time-600x300.jpg
 				</value>
 			</list>
+		</property>
+		<property name="number" value="1">
 		</property>
 	</bean>
 
@@ -2245,6 +2285,8 @@
 				</value>
 			</list>
 		</property>
+		<property name="number" value="2">
+		</property>
 	</bean>
 
 	<bean id="section3" class="domain.Section">
@@ -2255,6 +2297,8 @@
 				<value>https://www.vgr.com/wp-content/uploads/2018/11/Red-Dead-Redemption-2-Download-Time-600x300.jpg
 				</value>
 			</list>
+		</property>
+		<property name="number" value="3">
 		</property>
 	</bean>
 

@@ -20,6 +20,7 @@ import domain.CreditCard;
 import domain.Customer;
 import domain.Endorsement;
 import domain.FixUpTask;
+import domain.HandyWorker;
 import domain.Message;
 import domain.Note;
 import domain.Report;
@@ -51,6 +52,9 @@ public class CustomerService {
 
 	@Autowired
 	private ReportService reportService;
+
+	@Autowired
+	private HandyWorkerService handyWorkerService;
 
 	// Simple CRUD methods ----------------------------------------------------
 
@@ -372,12 +376,12 @@ public class CustomerService {
 		return res;
 
 	}
-	
-	public Collection<Customer> topThreeCustomersInTermsOfComplaints(){
+
+	public Collection<Customer> topThreeCustomersInTermsOfComplaints() {
 		Collection<Customer> aux = customerRepository.topThreeCustomersInTermsOfComplaints();
 		Assert.notNull(aux);
 		Collection<Customer> res = new LinkedList<>();
-		for(int i = 0; i<3; i++) {
+		for (int i = 0; i < 3; i++) {
 			Customer customer = aux.iterator().next();
 			aux.remove(customer);
 			res.add(customer);
@@ -406,6 +410,43 @@ public class CustomerService {
 		str += String.format("%02d", date.getDay());
 		String res = str + "-" + generateAlphanumeric();
 		return res;
+	}
+
+	public Collection<Customer> findByHandyWorkerUserAccountId(final int id) {
+		return this.customerRepository.getCustomersForHandyWorkerWithUserAccountId(id);
+	}
+
+	public Customer findByPrincipal() {
+		Customer res;
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		if (userAccount == null)
+			res = null;
+		else
+			res = this.customerRepository.findByUserAccountId(userAccount.getId());
+		return res;
+	}
+
+	public void addToCustomerEndorsements(final Customer customer, final Endorsement e) {
+		final Authority authority = new Authority();
+		authority.setAuthority(Authority.CUSTOMER);
+		Assert.notNull(customer, "customer.not.null");
+		Assert.notNull(e, "customer.endorsement.not.null");
+		final UserAccount logedUserAccount = LoginService.getPrincipal();
+		Assert.notNull(logedUserAccount, "customer.notLogged");
+		Assert.isTrue(logedUserAccount.getAuthorities().contains(authority));
+		final HandyWorker handyWorker = this.handyWorkerService
+				.findByUserAccountId(e.getHandyWorker().getUserAccount().getId());
+		Assert.isTrue(this.handyWorkerService.findByCustomerUserAccountId(customer.getUserAccount().getId())
+				.contains(handyWorker));
+		final Collection<Endorsement> endorsements = customer.getEndorsements();
+		endorsements.add(e);
+		customer.setEndorsements(endorsements);
+		this.customerRepository.save(customer);
+	}
+	
+	public Customer findByUserAccountId(final int id) {
+		return this.customerRepository.findByUserAccountId(id);
 	}
 
 }

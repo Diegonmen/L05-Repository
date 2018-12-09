@@ -22,7 +22,7 @@ public interface ReportRepository extends JpaRepository<Report, Integer> {
 	@Query("select re from Referee r join r.reports re where re.finalMode = true and r.id = ?1")
 	Collection<Report> findReportsInFinalModeByRefereeId(int refereeId);
 	
-	@Query("select com.report from HandyWorker c join c.applications ap join ap.fixUpTask.complaints com where c.id = 3298 and ap.status = 'ACCEPTED';")
+	@Query("select com.report from HandyWorker c join c.applications ap join ap.fixUpTask.complaints com where c.id = ?1 and ap.status = 'ACCEPTED'")
 	Collection<Report> findReportsByHandyWorkerId(int handyWorkerId);
 
 }
